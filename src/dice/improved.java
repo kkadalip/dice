@@ -5,8 +5,14 @@ import java.text.DecimalFormat;
 public class improved {
 
 	public static void main(String[] args) {
+		// KAS KUUS VISET (3+3) JA SAAN KAKS KÄTTE
+		// VÕI NELI VISET (2+2) JA SAAN ÜHE KÄTTE
+		
 		// 1) Kolmest täringust kaks on samad
 		int twoOrThreeOutOfThreeDices = 0;
+		// 2) Kahest täringust on kas üks või teine, mida vaja // ÜKS EMBA KUMBA 1 või 6 ... JA ÜKS KINDEL nt 4
+		int thisOrThat = 0;
+		
 		// Kas jätta üks "poolik" ja veeretada 2 täringut, et saada
 		
 		int timesRolled = 1000000;
@@ -18,15 +24,19 @@ public class improved {
 		int dice_1_result;
 		int dice_2_result;
 		int dice_3_result;
-		int goalNumber;
+		int goalNumber = 3; // mis numbrit tahan visata
 		int howManyGoalNumbers;
+		
+		int goalNumberThisOrThat1 = 1;
+		int goalNumberThisOrThat2 = 6;
+		int goalNumberThisOrThat3 = 4;
+		
 		for(int i=0; i < timesRolled; i++){
 			dice_1_result = throwDice();
 			dice_2_result = throwDice();
 			dice_3_result = throwDice();
 			
-			goalNumber = 3; // mis numbrit tahan visata
-			// CHECK IF 2 OF SAME
+			// CHECK IF 2 OF SAME START  ---------------------------------------------
 			howManyGoalNumbers = 0;
 			if(dice_1_result == goalNumber){
 				howManyGoalNumbers++;
@@ -40,6 +50,11 @@ public class improved {
 			if(howManyGoalNumbers == 2 || howManyGoalNumbers == 3){
 				twoOrThreeOutOfThreeDices++;
 			}
+			// CHECK IF 2 OF SAME END  ---------------------------------------------
+			
+			if((dice_1_result == goalNumberThisOrThat1 || dice_1_result == goalNumberThisOrThat2) && dice_2_result == goalNumberThisOrThat3){
+				thisOrThat++;
+			}
 			
 			incrementDiceResult(dice1, dice_1_result);
 			incrementDiceResult(dice2, dice_2_result);
@@ -50,7 +65,8 @@ public class improved {
 		dice3.printDice(timesRolled);
 		
 		DecimalFormat df = new DecimalFormat("0.00");
-		System.out.println("Kaks või kolm kolmest täringust: " + df.format((double) twoOrThreeOutOfThreeDices / timesRolled * 100) + "%");
+		System.out.println("Kaks või kolm kolmest täringust: " + twoOrThreeOutOfThreeDices + " --> " + df.format((double) twoOrThreeOutOfThreeDices / timesRolled * 100) + "%");
+		System.out.println("Emb kumb: " + thisOrThat + " --> " + df.format((double) thisOrThat / timesRolled * 100) + "%");
 	}
 	
 	public static int throwDice(){
