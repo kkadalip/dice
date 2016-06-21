@@ -14,8 +14,9 @@ public class Kasparilt {
 		
 		// parameetrid:
 		int sides = 6; // täringul on 6 tahku
-		int dicesOriginal = 5; // mitu täringut (nii mitme täringu kaupa viskan (nt 5 korraga))
-		int triesOriginal = 3; // mitu proovi (e mitu korda võimalus täringuid visata)
+		int dicesOriginal = 5; // 5 // mitu täringut (nii mitme täringu kaupa viskan (nt 5 korraga))
+		int triesOriginal = 3; // 3 // mitu proovi (e mitu korda võimalus täringuid visata)
+		int goalAmount = 3; // mitu õiget (peab olema kõigist (kas jahin 5t õiget 5st vmt))
 		int rolls = 1000000; // viskan täringuid miljon korda kokku (per 1 täring)
 		int series = rolls / (dicesOriginal * triesOriginal); // viskan täringut nii mitu seeriat (nt 5 täringut korraga)
 		int wantThisNumber = 4;
@@ -29,7 +30,6 @@ public class Kasparilt {
 		
 		// lõpptulemused:
 		int totalTimesSuccessful = 0; // mitu korda olin edukas oma üldeesmärgi saavutamisel
-		int goalAmount = 5; // mitu õiget peab olema kõigist (kas jahin 5t õiget 5st vmt).
 		
 		// 5te täringut viskan nt 60 tuhat korda (miljon total vmt)
 		// üks seeria on näiteks 3 korda 5 täringut visata
