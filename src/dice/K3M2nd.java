@@ -22,7 +22,7 @@ public class K3M2nd {
 		
 		// MUL ON OLEMAS 2 ÕIGET, MÄND, VEERETAN TEISED UUESTI
 		// EHK 2 + 2 TÄRINGUT VISATA
-		// KUI SAAN TEISE MÄNNA, SIIS SELLE JÄTAN KA ALLES JA VEERETAN VIIMAST TÄRINGUT ERALDI
+		// KUI SAAN TEISE MÄNNA VÕI ÕIGE, SIIS SELLE JÄTAN KA ALLES JA VEERETAN VIIMAST TÄRINGUT ERALDI
 		// VÕIDU TINGIMUSED:
 		// 1) MÄND + ÕIGE
 		// 2) ÕIGE + ÕIGE (2 ÕIGET)
@@ -34,7 +34,7 @@ public class K3M2nd {
 		
 		// parameetrid:
 		int sides = 6; // täringul on 6 tahku
-		int dicesOriginal = 3; // 5 // mitu täringut (nii mitme täringu kaupa viskan (nt 5 korraga))
+		int dicesOriginal = 2; // 5 // mitu täringut (nii mitme täringu kaupa viskan (nt 5 korraga))
 		int triesOriginal = 2; // 3 // mitu proovi (e mitu korda võimalus täringuid visata)
 		//int goalAmount = 2; // mitu õiget (peab olema kõigist (kas jahin 5t õiget 5st vmt))
 		int rolls = 1000000; // viskan täringuid miljon korda kokku (per 1 täring)
@@ -65,10 +65,10 @@ public class K3M2nd {
 //			alreadyCorrect = 0;
 
 			wantNumbers = 0;
+			jokers = 0;
 			// senikaua viskan kuni visete kordi veel on JA veel on vaja saada õigeid täringuid juurde
 			//while(triesTemp > 0 && alreadyCorrect < goalAmount){ // NB! &&, muidu timestothrow läheb negatiivseks kuna pole veel saanud vajaminevaid tulemusi
 			while(triesTemp > 0){
-				jokers = 0;
 				// viskan nii palju täringuid ükshaaval kui on täringuid ette nähtud (nt 5 asemel 3)
 				numbers = new int[dicesTemp]; // hoidik tulemuste jaoks, resetin ära uute jaoks, pikkus vastab täringute arvule
 				// reaalne täringute viskamine nii palju arv kordi, kui on täringuid visata
@@ -79,23 +79,13 @@ public class K3M2nd {
 			
 				// kontrollin saadud tulemuste massiivi läbi, kui on tahetud number, siis läheb korrektsete sekka
 				for(int number : numbers){
-					if(number == jokerNumber){
-						jokers++;
-					}else if(number == wantNumber){
+					if(number == wantNumber){
 						wantNumbers++;
-					}
-				}
-				
-				for(int number : numbers){
-					if(number == wantNumber){ // männad ei huvita: && jokers < 2){
-//						alreadyCorrect++; // õigeid tulemusi on nüüd ühe võrra rohkem
 						dicesTemp--; // ühe võrra vähem saan visata täringuid
-					}
-					// JÄTA MÄNNAD ALLES:
-					//else if(number == jokerNumber && jokers >= 2){ // if
-					//	dicesTemp--;
-					//}
-					
+					}else if(number == jokerNumber && jokers < 1){
+						jokers++;
+						dicesTemp--; // ühe võrra vähem saan visata täringuid
+					}					
 				} // for
 				triesTemp--;
 				// kui on õigeid nii palju kui vaja, siis olen olnud edukas
@@ -104,7 +94,7 @@ public class K3M2nd {
 				System.out.print("Saan veel visata: " + triesTemp);
 				System.out.println(" tulemused: " + Arrays.toString(numbers));
 				
-				if((jokers == 2 && wantNumbers == 1) || (wantNumbers >= 2)){
+				if((jokers == 1 && wantNumbers == 1) || wantNumbers == 2){
 					totalTimesSuccessful++;
 					System.out.println("SUCCESSFUL! \n");
 					break;
