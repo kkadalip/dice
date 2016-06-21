@@ -2,82 +2,92 @@ package dice;
 
 import java.text.DecimalFormat;
 
-public class improved {
+public class Improved {
 
 	public static void main(String[] args) {
+		// Kaks või kolm kolmest täringust: 74056 --> 7,41%
+		// Emb kumb: 55971 --> 5,60%
+		
+		// Vaja selgitada, kas jätta joker täringut alles või mitte
+		
+		int rolled = 1000000;
+
 		// KAS KUUS VISET (3+3) JA SAAN KAKS KÄTTE
 		// VÕI NELI VISET (2+2) JA SAAN ÜHE KÄTTE
-		
+
 		// 1) Kolmest täringust kaks on samad
-		int twoOrThreeOutOfThreeDices = 0;
+		int twoOrThreeCertainNumber = 0;
 		// 2) Kahest täringust on kas üks või teine, mida vaja // ÜKS EMBA KUMBA 1 või 6 ... JA ÜKS KINDEL nt 4
 		int thisOrThat = 0;
-		
+
 		// Kas jätta üks "poolik" ja veeretada 2 täringut, et saada
-		
-		int timesRolled = 1000000;
-		
+
 		Dice dice1 = new Dice(1);
 		Dice dice2 = new Dice(2);
 		Dice dice3 = new Dice(3);
-		
-		int dice_1_result;
-		int dice_2_result;
-		int dice_3_result;
+
+		int dice1_res;
+		int dice2_res;
+		int dice3_res;
 		int goalNumber = 3; // mis numbrit tahan visata
 		int howManyGoalNumbers;
-		
-		int goalNumberThisOrThat1 = 1;
-		int goalNumberThisOrThat2 = 6;
-		int goalNumberThisOrThat3 = 4;
-		
-		for(int i=0; i < timesRolled; i++){
-			dice_1_result = throwDice();
-			dice_2_result = throwDice();
-			dice_3_result = throwDice();
-			
+
+		int goalThisThat1 = 1;
+		int goalThisThat2 = 6;
+		int goalThisThat3 = 4;
+
+		for(int i=0; i < rolled; i++){
+			dice1_res = throwDice();
+			dice2_res = throwDice();
+			dice3_res = throwDice();
+
 			// CHECK IF 2 OF SAME START  ---------------------------------------------
 			howManyGoalNumbers = 0;
-			if(dice_1_result == goalNumber){
+			if(dice1_res == goalNumber){
 				howManyGoalNumbers++;
 			}
-			if(dice_2_result == goalNumber){
+			if(dice2_res == goalNumber){
 				howManyGoalNumbers++;
 			}
-			if(dice_3_result == goalNumber){
+			if(dice3_res == goalNumber){
 				howManyGoalNumbers++;
 			}
 			if(howManyGoalNumbers == 2 || howManyGoalNumbers == 3){
-				twoOrThreeOutOfThreeDices++;
+				twoOrThreeCertainNumber++;
 			}
 			// CHECK IF 2 OF SAME END  ---------------------------------------------
-			
-			if((dice_1_result == goalNumberThisOrThat1 || dice_1_result == goalNumberThisOrThat2) && dice_2_result == goalNumberThisOrThat3){
+
+			// Dice1 on kas 1 või 6 JA Dice2 on 4
+			// VÕI
+			// Dice2 on 4 JA Dice1 on kas 1 või 6
+			if((dice1_res == goalThisThat1 || dice1_res == goalThisThat2) && (dice2_res == goalThisThat3) ||
+					dice2_res == goalThisThat3 && (dice1_res == goalThisThat1 || dice1_res == goalThisThat2)){
 				thisOrThat++;
 			}
-			
-			incrementDiceResult(dice1, dice_1_result);
-			incrementDiceResult(dice2, dice_2_result);
-			incrementDiceResult(dice3, dice_3_result);
+
+			incrementDiceResult(dice1, dice1_res);
+			incrementDiceResult(dice2, dice2_res);
+			incrementDiceResult(dice3, dice3_res);
 		}
-		dice1.printDice(timesRolled);
-		dice2.printDice(timesRolled);
-		dice3.printDice(timesRolled);
-		
+		dice1.printDice(rolled);
+		dice2.printDice(rolled);
+		dice3.printDice(rolled);
+
 		DecimalFormat df = new DecimalFormat("0.00");
-		System.out.println("Kaks või kolm kolmest täringust: " + twoOrThreeOutOfThreeDices + " --> " + df.format((double) twoOrThreeOutOfThreeDices / timesRolled * 100) + "%");
-		System.out.println("Emb kumb: " + thisOrThat + " --> " + df.format((double) thisOrThat / timesRolled * 100) + "%");
+		System.out.println();
+		System.out.println("Kaks või kolm kolmest täringust: " + twoOrThreeCertainNumber + " --> " + df.format((double) twoOrThreeCertainNumber / rolled * 100) + "%");
+		System.out.println("Emb kumb: " + thisOrThat + " --> " + df.format((double) thisOrThat / rolled * 100) + "%");
 	}
-	
+
 	public static int throwDice(){
 		int result = (int) (Math.random() * 6 + 1);
 		return result;
 	}
-	
+
 	public static double calculatePercentage (int smaller, int bigger){
 		return (double) smaller / bigger * 100;
 	}
-	
+
 	public static void incrementDiceResult(Dice dice, int result){
 		switch (result){
 		case 1:
@@ -100,21 +110,21 @@ public class improved {
 			break;
 		}
 	}
-	
+
 	public static class Dice{
 		int dice_number;
-		
+
 		int side1_total = 0;
 		int side2_total = 0;
 		int side3_total = 0;
 		int side4_total = 0;
 		int side5_total = 0;
 		int side6_total = 0;
-		
+
 		public Dice(int whichDice) {
 			dice_number = whichDice;
 		}
-		
+
 		public int getSide1_total() {
 			return side1_total;
 		}
@@ -151,7 +161,7 @@ public class improved {
 		public void setSide6_total(int side6_total) {
 			this.side6_total = side6_total;
 		}
-		
+
 		public void printDice(int totalTimesRolled){
 			DecimalFormat df = new DecimalFormat("0.00");      			
 			System.out.println("Dice "+ dice_number +":");
@@ -162,7 +172,7 @@ public class improved {
 			System.out.println("5: " + side5_total + " --> " + df.format(calculatePercentage(side5_total, totalTimesRolled)) + "%");
 			System.out.println("6: " + side6_total + " --> " + df.format(calculatePercentage(side6_total, totalTimesRolled)) + "%");
 		}
-		
+
 	}
 }
 
