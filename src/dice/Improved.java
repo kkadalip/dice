@@ -79,7 +79,7 @@ public class Improved {
 		System.out.println("Emb kumb: " + thisOrThat + " --> " + df.format((double) thisOrThat / rolled * 100) + "%");
 	}
 
-	public static int throwD5: 1.3%ice(){
+	public static int throwDice(){
 		int result = (int) (Math.random() * 6 + 1);
 		return result;
 	}
