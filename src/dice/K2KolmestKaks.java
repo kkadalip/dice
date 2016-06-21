@@ -5,7 +5,8 @@ import java.util.Arrays;
 public class K2KolmestKaks {
 
 	public static void main(String[] args) {
-
+		boolean debug = true;
+		
 		// 25%, EI JÄTA MÄNDA ALLES KUI KA TULI 2 MÄNDA PÄRAST ESIMEST VEERETAMIST
 		
 		// MUL ON OLEMAS 2 ÕIGET, VEERETAN TEISED UUESTI
@@ -37,7 +38,7 @@ public class K2KolmestKaks {
 		int dicesOriginal = 3; // 5 // mitu täringut (nii mitme täringu kaupa viskan (nt 5 korraga))
 		int triesOriginal = 2; // 3 // mitu proovi (e mitu korda võimalus täringuid visata)
 		//int goalAmount = 2; // mitu õiget (peab olema kõigist (kas jahin 5t õiget 5st vmt))
-		int rolls = 1000000; // viskan täringuid miljon korda kokku (per 1 täring)
+		int rolls = 10000000; // viskan täringuid miljon korda kokku (per 1 täring)
 		int series = rolls / (dicesOriginal * triesOriginal); // viskan täringut nii mitu seeriat (nt 5 täringut korraga)
 		int wantNumber = 1;
 		int jokerNumber = 6;
@@ -58,7 +59,9 @@ public class K2KolmestKaks {
 		// 5te täringut viskan nt 60 tuhat korda (miljon total vmt)
 		// üks seeria on näiteks 3 korda 5 täringut visata
 		for(int i = 0; i < series; i++){
-			System.out.println();
+			if(debug){
+				System.out.println();
+			}
 			// uus visketsükkel ja numbritel reset, kuna uus katse (5 täringut, 3 katset)
 			triesTemp = triesOriginal; 
 			dicesTemp = dicesOriginal;
@@ -79,34 +82,42 @@ public class K2KolmestKaks {
 			
 				// kontrollin saadud tulemuste massiivi läbi, kui on tahetud number, siis läheb korrektsete sekka
 				for(int number : numbers){
-					if(number == jokerNumber){
-						jokers++;
-					}else if(number == wantNumber){
+					if(number == wantNumber){
 						wantNumbers++;
+						dicesTemp--; // ühe võrra vähem saan visata täringuid
+					}else if(number == jokerNumber){
+						jokers++;
 					}
 				}
+				// JÄTA MÄNNAD ALLES:
 				
-				for(int number : numbers){
-					if(number == wantNumber){ // männad ei huvita: && jokers < 2){
-//						alreadyCorrect++; // õigeid tulemusi on nüüd ühe võrra rohkem
-						dicesTemp--; // ühe võrra vähem saan visata täringuid
-					}
-					// JÄTA MÄNNAD ALLES:
-					//else if(number == jokerNumber && jokers >= 2){ // if
-					//	dicesTemp--;
-					//}
-					
-				} // for
+				// JÄTAN ÜHE MÄNNA ALLES // KAHANDAB, HALB!
+//				if(jokers == 1){ 
+//					dicesTemp--;
+//					wantNumbers += 0.5;
+//				}
+				
+//				// JÄTAN KAKS MÄNDA ALLES KUI ESINEB // HEA
+//				if(jokers == 2){ 
+//					dicesTemp -= 2;
+//					wantNumbers++;
+//				}
+//				// JÄTAN KOLMEST KAKS MÄNDA ALLES
+//				if(jokers == 3){
+//					dicesTemp -= 2;
+//					wantNumbers++;
+//				}
+				
 				triesTemp--;
 				// kui on õigeid nii palju kui vaja, siis olen olnud edukas
 				
 				// TÖÖTAV KOODI KONTROLL:
-				System.out.print("Saan veel visata: " + triesTemp);
-				System.out.println(" tulemused: " + Arrays.toString(numbers));
+				if(debug)System.out.print("Saan veel visata: " + triesTemp);
+				if(debug)System.out.println(" tulemused: " + Arrays.toString(numbers));
 				
-				if((jokers == 2 && wantNumbers == 1) || (wantNumbers >= 2)){
+				if(wantNumbers >= 2){ //((jokers == 2 && wantNumbers == 1) || (wantNumbers >= 2)){
 					totalTimesSuccessful++;
-					System.out.println("SUCCESSFUL! \n");
+					if(debug)System.out.println("SUCCESSFUL! \n");
 					break;
 				}
 			} // END while
