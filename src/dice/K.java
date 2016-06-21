@@ -2,9 +2,11 @@ package dice;
 
 import java.util.Arrays;
 
-public class Kasparilt {
+public class K {
 
 	public static void main(String[] args) {
+		// Ilma männata veeretamine:
+		
 		// Tõenäosused:
 		// 1: 62.8%
 		// 2: 54.4%
