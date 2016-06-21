@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class K3M2nd {
 
 	public static void main(String[] args) {
-
+		boolean debug = false;
 		// 25%, EI JÄTA MÄNDA ALLES KUI KA TULI 2 MÄNDA PÄRAST ESIMEST VEERETAMIST
 		
 		// MUL ON OLEMAS 2 ÕIGET, VEERETAN TEISED UUESTI
@@ -58,7 +58,9 @@ public class K3M2nd {
 		// 5te täringut viskan nt 60 tuhat korda (miljon total vmt)
 		// üks seeria on näiteks 3 korda 5 täringut visata
 		for(int i = 0; i < series; i++){
-			System.out.println();
+			if(debug){
+				System.out.println();
+			}
 			// uus visketsükkel ja numbritel reset, kuna uus katse (5 täringut, 3 katset)
 			triesTemp = triesOriginal; 
 			dicesTemp = dicesOriginal;
@@ -91,12 +93,12 @@ public class K3M2nd {
 				// kui on õigeid nii palju kui vaja, siis olen olnud edukas
 				
 				// TÖÖTAV KOODI KONTROLL:
-				System.out.print("Saan veel visata: " + triesTemp);
-				System.out.println(" tulemused: " + Arrays.toString(numbers));
+				if(debug)System.out.print("Saan veel visata: " + triesTemp);
+				if(debug)System.out.println(" tulemused: " + Arrays.toString(numbers));
 				
 				if((jokers == 1 && wantNumbers == 1) || wantNumbers == 2){
 					totalTimesSuccessful++;
-					System.out.println("SUCCESSFUL! \n");
+					if(debug)System.out.println("SUCCESSFUL! \n");
 					break;
 				}
 			} // END while

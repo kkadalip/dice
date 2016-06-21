@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class K2KolmestKaks {
 
 	public static void main(String[] args) {
-		boolean debug = true;
+		boolean debug = false;
 		
 		// 25%, EI JÄTA MÄNDA ALLES KUI KA TULI 2 MÄNDA PÄRAST ESIMEST VEERETAMIST
 		
